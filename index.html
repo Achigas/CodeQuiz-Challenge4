@@ -8,29 +8,45 @@
         <link rel="stylesheet" href="./assets/css/style.css">
     </head>
 
-    <body>
+    <body> 
+
         <header>
-            <h4>View High Scores</h4> 
-            <h4 class="timer" id="timer">Time: <span class=hide >0</span></h4>
+            <h4 id="view-high-scores">View High Scores</h4> 
+            <h4 class="timer">Time: <span id="timer">0</span></h4>
         </header>
-        <div class="starter-container">
+
+        <div id="starter-container" class="container start show">
             <h1>Coding Quiz Challenge</h1>  
             <p>Try to answer the following code-related questions within the time limit.
             Keep in mind that incorrect answers will penalize your score/time by 10 seconds!
             </p>
-            <button class="btn" id="start-game">Start Quiz</button>
+            <button class="btn startend" id="start-game">Start Quiz</button>
         </div>
 
-        <div class="question-container">
-            <div id="question">Question whatd do oueajfdsfkjsadflasj </div>
-            
-            <div id="answers-container" class="btn-grid">
-                <button class=btn id="answer-button">Answer1</button> 
-                <button class=btn id="answer-button">Answer1</button> 
-                <button class=btn id="answer-button">Answer1</button> 
-                <button class=btn id="answer-button">Answer1</button> 
-            </div>
+        <div id="question-container" class="container questions hide">
+            <div id="question"></div>
+            <div id="answer-buttons" class="btn-grid"></div>
         </div>
-    <!---- <script src="./assets/js/script.js"></script> ----->
+
+        <div id="end-container" class="container end hide">
+            <div id=score-banner>
+                <h1>All done!</h1>
+            </div>  
+            <form id="initials-form" class="initials">
+              <p> Enter Initials:
+                <input type="text" name="initials" id="initials" class="text-input" />
+                <button class="btn startend" id="sumbit-score" type="submit">Submit</button> </p>
+              </form>
+        </div>
+
+        <div id="high-score-container" class="high-scores container hide">
+            <h1 class="high-score">High Scores</h1>
+            <ul id="high-score-list" class="score-list"></ul>
+        <div>
+            <button class="btn" id="go-back">Go Back</button>
+            <button class="btn" id="clear-high-scores">Clear high scores</button>
+        </div>
+    </div>
+    <script src="./assets/js/script.js"></script> 
 </body>
 </html>

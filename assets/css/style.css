@@ -21,6 +21,13 @@
   header {
       display: flex;
       justify-content: space-between;
+      margin: auto;
+      width: 85%;
+  }
+
+  #view-high-scores:hover {
+      cursor: pointer;
+      color: var(--tertiary)
   }
 
   header h4 {
@@ -37,36 +44,64 @@
       padding-right: 20px;
   }
 
-.starter-container {
-      display: none;
+.container {
       padding: 20px;
       flex-direction: column;
-      align-items: center;
-      width: 60%;
+      width: 50%;
       margin: auto;
   }
+
   
-  .starter-container h1 {
+ h1 {
     color: var(--primary);
-    text-align: center;
     font-size: 3.0rem;
     font-weight: bold;
   }
 
-  .starter-container p {
+  p {
     color: var(--primary);
-    text-align: center;
     font-size: 2.0rem;
   }
+
+  .start {
+    align-items: center;
+    text-align: center;
+    }
   
-  .question-container {
-    display: flex;
-    flex-direction: column;
+ .start h1, .start p {
+     text-align: center;
+ }
+
+  .questions {
     align-items: flex-start;
     justify-content: flex-start;
-    width: 80%;
     padding: 40px 20px;
     margin: auto;
+  }
+
+  .end h1, .end p {
+      text-align: left
+  }
+
+  .end input {
+    outline: thick; 
+    border-width: 1px;
+    padding: 5px;
+    width: 35%;
+    font-size: 2.2rem;
+    border-radius: 5px;
+  }
+
+  .end input:focus {
+    border: 2px solid var(--secondary);
+  }
+
+  .show {
+      display: flex;
+  }
+
+  .hide {
+      display: none;
   }
 
   #question {
@@ -74,6 +109,10 @@
     text-align: left;
     font-size: 3.0rem;
     font-weight: bold;
+  }
+
+  #high-score {
+      text-align: left;
   }
 
   .btn {
@@ -89,6 +128,7 @@
       background: var(--tertiary);
       border-radius: 10px;
       box-shadow: 0 2px grey;
+      cursor: pointer;
   }
 
   .btn:active {
@@ -107,3 +147,11 @@
       grid-gap: 5px;
       margin: 20px 0;
   }
+
+ .startend {
+     width: 25%;
+ }
+
+ .answerbtn {
+     width: 150%;
+ }
