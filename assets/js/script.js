@@ -1,13 +1,15 @@
       var containerQuestionEl = document.getElementById("question-container");
       var containerStartEl = document.getElementById("starter-container");
       var containerEndEl = document.getElementById("end-container")
-      var containerScore = document.getElementById("score-banner")
+      var containerScoreEl = document.getElementById("score-banner")
       var formInitials = document.getElementById("initials-form")
-      var containerhighscores = document.getElementById("high-score-container")
+      var containerHighScoresEl = document.getElementById("high-score-container")
       var ViewHighScoreEl = document.getElementById("view-high-scores")
       var listHighScoreEl = document.getElementById("high-score-list")
       //buttons
-      var startbtnEl = document.querySelector("#start-game");
+      var btnStartEl = document.querySelector("#start-game");
+      var btnGoBackEl = document.querySelector("#go-back")
+      var btnClearScoresEl = document.querySelector("#clear-high-scores")
       //questions/answers element
       var questionEl = document.getElementById("question")
       var answerbuttonsEl = document.getElementById("answer-buttons")
@@ -47,8 +49,17 @@
           choices: [{choice: '1. numbers'}, {choice: '2. booleans'}, {choice: '3. strings'}, {choice: '4. all of the above'}]
         },
       ];
-    
-
+      
+        //if go back button is hit on high score page
+    var renderStartPage = function () {
+        containerHighScoresEl.classList.add("hide")
+        containerHighScoresEl.classList.remove("show")
+        containerStartEl.classList.remove("hide")
+        containerStartEl.classList.add("show")
+        containerScoreEl.removeChild(containerScoreEl.lastChild)
+        QuestionIndex = 0 
+        score = 0
+    }
     
     var startGame = function() {
         //add classes to show/hide start and quiz screen
@@ -60,7 +71,8 @@
         arrayShuffledQuestions = questions.sort(() => Math.random() - 0.5)
         setQuestion()
       }
-
+    
+    //set next question for quiz
     var setQuestion = function() {
         resetAnswers()
         displayQuestion(arrayShuffledQuestions[QuestionIndex])
@@ -90,16 +102,14 @@
     var answerCheck = function(event) {
         var selectedanswer = event.target
             if (arrayShuffledQuestions[QuestionIndex].a === selectedanswer.innerText){
-                score++
-                console.log("WOW")
+                score = score + 10
             }
               else {
-              score--
-              console.log("NOOO")
+              score = score - 5
               //subrtract time
           };
 
-          //go to next question, check if there is more questions
+        //go to next question, check if there is more questions
           QuestionIndex++
             if  (arrayShuffledQuestions.length > QuestionIndex + 1) {
                 setQuestion()
@@ -109,46 +119,50 @@
                 }
         }
 
-        var showScore = function () {
-            containerQuestionEl.classList.add("hide");
-            containerEndEl.classList.remove("hide");
-            containerEndEl.classList.add("show");
+    var showScore = function () {
+        ontainerQuestionEl.classList.add("hide");
+        containerEndEl.classList.remove("hide");
+        containerEndEl.classList.add("show");
 
-            var scoreDisplay = document.createElement("p");
-            scoreDisplay.innerText = ("Your final score is " + score + "!");
-            containerScore.appendChild(scoreDisplay);
+        var scoreDisplay = document.createElement("p");
+        scoreDisplay.innerText = ("Your final score is " + score + "!");
+        containerScoreEl.appendChild(scoreDisplay);
         }
 
-        var saveHighScore = function (event) {
+    var saveHighScore = function (event) {
 
-            event.preventDefault()
-            console.log(score)
+        event.preventDefault()
 
-            var initials = document.querySelector("#initials").value;
-            if (initials === "") {
-                alert("Enter your intials!")
+        var initials = document.querySelector("#initials").value;
+          if (!initials) {
+            alert("Enter your intials!");
+            return;
             }
 
-            var arrayHighScores = [
-                {initials: initials,
-                score: score} ]
+        formInitials.reset()
+
+        var HighScore = [
+        {initials: initials,
+        score: score} ]
             
-            HighScores.push(arrayHighScores)
-            console.log(arrayHighScores)
+        HighScores.push[HighScore]
 
-            localStorage.setItem("HighScores", JSON.stringify(HighScores))
+        localStorage.setItem("HighScores", JSON.stringify(HighScores))
 
-            displayHighScores()
+        displayHighScores()
             
-        }
+    }
 
-        var loadHighScore = function () {
-            var LoadedHighScores = localStorage.getItem('HighScores')
+        var createHighScore
+
+    var loadHighScore = function () {
+        var LoadedHighScores = localStorage.getItem("HighScores")
             if (!LoadedHighScores) {
-                return false;
+            return false;
         }
 
         LoadedHighScores = JSON.parse(LoadedHighScores);
+        console.log(LoadedHighScores)
 
         for (var i = 0; i < LoadedHighScores.length; i++) {
             var highscoreEl = document.createElement("li")
@@ -156,35 +170,50 @@
             highscoreEl.innerText = LoadedHighScores[i].initials + " - " + LoadedHighScores[i].score;
             listHighScoreEl.appendChild(highscoreEl)
 
+        HighScores.push(LoadedHighScores[i])
+            
         }
-        }  
+    }  
 
-        var displayHighScores = function() {
+    var displayHighScores = function() {
 
-            containerhighscores.classList.remove("hide")
-            containerhighscores.classList.add("show")
+        containerHighScoresEl.classList.remove("hide")
+        containerHighScoresEl.classList.add("show")
 
-            if (containerEndEl.className = "show") {
-                containerEndEl.classList.remove("show")
-                containerEndEl.classList.add("hide")
+        if (containerEndEl.className = "show") {
+            containerEndEl.classList.remove("show")
+            containerEndEl.classList.add("hide")
             }
-            if (containerStartEl.className = "show") {
-                containerStartEl.classList.remove("show")
-                containerStartEl.classList.add("hide")
+        if (containerStartEl.className = "show") {
+            containerStartEl.classList.remove("show")
+            containerStartEl.classList.add("hide")
             }
             
-            if (containerQuestionEl.className = "show") {
-                containerQuestionEl.classList.remove("show")
-                containerQuestionEl.classList.add("hide")
+        if (containerQuestionEl.className = "show") {
+            containerQuestionEl.classList.remove("show")
+            containerQuestionEl.classList.add("hide")
             }
- 
-            loadHighScore()
-        }
         
+    }
+
+    var clearScores = function () {
+        HighScores = []
+
+        while (listHighScoreEl.firstChild) {
+            listHighScoreEl.removeChild(listHighScoreEl.firstChild)
+        }
+
+    }
+
+    loadHighScore()
         
       //on start click, start game
-      startbtnEl.addEventListener("click", startGame)
+      btnStartEl.addEventListener("click", startGame)
       //on submit button -- enter or click
       formInitials.addEventListener("submit", saveHighScore)
       //when view high-scores is clicked
       ViewHighScoreEl.addEventListener("click", displayHighScores)
+      //Go back button
+      btnGoBackEl.addEventListener("click", renderStartPage)
+      //clear scores button
+      btnClearScoresEl.addEventListener("click", clearScores)

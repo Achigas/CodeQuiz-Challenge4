@@ -153,5 +153,14 @@
  }
 
  .answerbtn {
-     width: 150%;
+     width: 50%;
+     text-align: left;
  }
+
+ ul .score-list {
+
+ }
+
+.high-score {
+
+}
