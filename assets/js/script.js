@@ -56,6 +56,10 @@
           a: '2. Document Object Model', 
           choices: [{choice: '1. Do Overnight Modules'}, {choice: '2. Document Object Model'}, {choice: '3. Divas Obviously Model'}, {choice: '4. Do Oo Mo'}]
         },
+        { q: 'What are is getItem commonly used for?', 
+          a: '2. local storage', 
+          choices: [{choice: '1. adding drama'}, {choice: '2. local storage'}, {choice: '3. online shopping'}, {choice: '4. naming a variable'}]
+        },
       ];
       
         //if go back button is hit on high score page
@@ -65,7 +69,9 @@
         containerStartEl.classList.remove("hide")
         containerStartEl.classList.add("show")
         containerScoreEl.removeChild(containerScoreEl.lastChild)
-        QuestionIndex = 0 
+        QuestionIndex = 0
+        gameover = ""
+        timerEl.textContent = 0 
         score = 0
 
         if (correctEl.className = "show") {
@@ -136,7 +142,7 @@
             answerbuttonsEl.appendChild(answerbutton)
             }
         };
-    
+    //display correct! on screen
     var answerCorrect = function() {
         if (correctEl.className = "hide") {
             correctEl.classList.remove("hide")
@@ -145,7 +151,7 @@
             wrongEl.classList.add("hide")
             }
         }  
-
+    //display wrong! on screen
     var answerWrong = function() {
         if (wrongEl.className = "hide") {
             wrongEl.classList.remove("hide")
@@ -160,13 +166,13 @@
         var selectedanswer = event.target
             if (arrayShuffledQuestions[QuestionIndex].a === selectedanswer.innerText){
                 answerCorrect()
-                score = score + 5
+                score = score + 7
             }
 
             else {
               answerWrong()
               score = score - 2;
-              timeleft = timeleft - 3;
+              timeleft = timeleft - 5;
           };
 
         //go to next question, check if there is more questions
@@ -190,7 +196,8 @@
         scoreDisplay.innerText = ("Your final score is " + score + "!");
         containerScoreEl.appendChild(scoreDisplay);
         }       
-
+    
+    //create high score values
     var createHighScore = function(event) { 
         event.preventDefault() 
         var initials = document.querySelector("#initials").value;
@@ -199,29 +206,40 @@
           return;
           }
 
-      formInitials.reset()
+      formInitials.reset();
 
-      var HighScore = [
-      {initials: initials,
-      score: score} ] 
+      var HighScore = {
+      initials: initials,
+      score: score
+      } 
 
-      HighScores.push(HighScore)
-    
-      var highscoreEl = document.createElement("li")
+      //push and sort scores
+      HighScores.push(HighScore);
+      HighScores.sort((a, b) => {return b.score-a.score});
+
+    //clear visibile list to resort
+    while (listHighScoreEl.firstChild) {
+       listHighScoreEl.removeChild(listHighScoreEl.firstChild)
+    }
+    //create elements in order of high scores
+    for (var i = 0; i < HighScores.length; i++) {
+      var highscoreEl = document.createElement("li");
       highscoreEl.ClassName = "high-score";
-      highscoreEl.innerHTML = initials + " - " + score;
-      listHighScoreEl.appendChild(highscoreEl)
-
-      saveHighScore()
-      displayHighScores()
-
+      highscoreEl.innerHTML = HighScores[i].initials + " - " + HighScores[i].score;
+      listHighScoreEl.appendChild(highscoreEl);
     }
 
+      saveHighScore();
+      displayHighScores();
+
+    }
+    //save high score
     var saveHighScore = function () {
         localStorage.setItem("HighScores", JSON.stringify(HighScores))
             
     }
 
+    //load values/ called on page load
     var loadHighScore = function () {
         var LoadedHighScores = localStorage.getItem("HighScores")
             if (!LoadedHighScores) {
@@ -229,58 +247,58 @@
         }
 
         LoadedHighScores = JSON.parse(LoadedHighScores);
-        console.log(LoadedHighScores)
-
+        LoadedHighScores.sort((a, b) => {return b.score-a.score})
+ 
 
         for (var i = 0; i < LoadedHighScores.length; i++) {
-            var loadedinitials = LoadedHighScores[i].initials;
-            var loadedscore = LoadedHighScores[i].score;
-            var highscoreEl = document.createElement("li")
+            var highscoreEl = document.createElement("li");
             highscoreEl.ClassName = "high-score";
-            highscoreEl.innerText = loadedinitials + " - " + loadedscore;
-            listHighScoreEl.appendChild(highscoreEl)
+            highscoreEl.innerText = LoadedHighScores[i].initials + " - " + LoadedHighScores[i].score;
+            listHighScoreEl.appendChild(highscoreEl);
 
-        HighScores.push(LoadedHighScores[i])
+            HighScores.push(LoadedHighScores[i]);
             
         }
     }  
 
+    //display high score screen from link or when intiials entered
     var displayHighScores = function() {
 
-        containerHighScoresEl.classList.remove("hide")
-        containerHighScoresEl.classList.add("show")
+        containerHighScoresEl.classList.remove("hide");
+        containerHighScoresEl.classList.add("show");
+        gameover = "true"
 
         if (containerEndEl.className = "show") {
-            containerEndEl.classList.remove("show")
-            containerEndEl.classList.add("hide")
+            containerEndEl.classList.remove("show");
+            containerEndEl.classList.add("hide");
             }
         if (containerStartEl.className = "show") {
-            containerStartEl.classList.remove("show")
-            containerStartEl.classList.add("hide")
+            containerStartEl.classList.remove("show");
+            containerStartEl.classList.add("hide");
             }
             
         if (containerQuestionEl.className = "show") {
-            containerQuestionEl.classList.remove("show")
-            containerQuestionEl.classList.add("hide")
+            containerQuestionEl.classList.remove("show");
+            containerQuestionEl.classList.add("hide");
             }
 
         if (correctEl.className = "show") {
             correctEl.classList.remove("show");
-            correctEl.classList.add("hide")
+            correctEl.classList.add("hide");
         }
-        
+
         if (wrongEl.className = "show") {
             wrongEl.classList.remove("show");
             wrongEl.classList.add("hide");
             }
         
     }
-
+    //clears high scores
     var clearScores = function () {
-        HighScores = []
+        HighScores = [];
 
         while (listHighScoreEl.firstChild) {
-            listHighScoreEl.removeChild(listHighScoreEl.firstChild)
+            listHighScoreEl.removeChild(listHighScoreEl.firstChild);
         }
 
         localStorage.clear(HighScores);

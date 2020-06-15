@@ -90,6 +90,7 @@
     width: 35%;
     font-size: 2.2rem;
     border-radius: 5px;
+    text-transform: uppercase;
   }
 
   .end input:focus {
