@@ -56,7 +56,7 @@
           a: '2. Document Object Model', 
           choices: [{choice: '1. Do Overnight Modules'}, {choice: '2. Document Object Model'}, {choice: '3. Divas Obviously Model'}, {choice: '4. Do Oo Mo'}]
         },
-        { q: 'What are is getItem commonly used for?', 
+        { q: 'What is getItem commonly used for?', 
           a: '2. local storage', 
           choices: [{choice: '1. adding drama'}, {choice: '2. local storage'}, {choice: '3. online shopping'}, {choice: '4. naming a variable'}]
         },
@@ -84,7 +84,7 @@
         }
     }
 
-
+    //every second, check if game-over is true, or if there is time left. Start time at 30. 
     var setTime = function () {
         timeleft = 30;
 
@@ -102,7 +102,7 @@
             clearInterval(timercheck)
         }
 
-    }, 1000)
+        }, 1000)
     }
 
     var startGame = function() {
@@ -171,8 +171,8 @@
 
             else {
               answerWrong()
-              score = score - 2;
-              timeleft = timeleft - 5;
+              score = score - 1;
+              timeleft = timeleft - 3;
           };
 
         //go to next question, check if there is more questions
@@ -184,7 +184,7 @@
                gameover = "true";
                showScore();
                 }
-        }
+    }
 
         //Display total score screen at end of game
     var showScore = function () {
@@ -195,7 +195,7 @@
         var scoreDisplay = document.createElement("p");
         scoreDisplay.innerText = ("Your final score is " + score + "!");
         containerScoreEl.appendChild(scoreDisplay);
-        }       
+    }       
     
     //create high score values
     var createHighScore = function(event) { 
@@ -204,9 +204,11 @@
         if (!initials) {
           alert("Enter your intials!");
           return;
-          }
+        }
 
       formInitials.reset();
+
+      initials = initials.toUpperCase()
 
       var HighScore = {
       initials: initials,
