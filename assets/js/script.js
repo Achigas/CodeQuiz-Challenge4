@@ -6,6 +6,8 @@
       var containerHighScoresEl = document.getElementById("high-score-container")
       var ViewHighScoreEl = document.getElementById("view-high-scores")
       var listHighScoreEl = document.getElementById("high-score-list")
+      var correctEl = document.getElementById("correct")
+      var wrongEl = document.getElementById("wrong")
       //buttons
       var btnStartEl = document.querySelector("#start-game");
       var btnGoBackEl = document.querySelector("#go-back")
@@ -18,7 +20,7 @@
       var timerEl = 0;
 
       //High Score Array
-      var HighScores = []
+      var HighScores = [];
 
        //assign array details for questions 
       var arrayShuffledQuestions
@@ -97,15 +99,37 @@
             answerbuttonsEl.appendChild(answerbutton)
             }
         };
+    
+    var answerCorrect = function() {
+        if (correctEl.className = "hide") {
+            correctEl.classList.remove("hide")
+            correctEl.classList.add("banner")
+            wrongEl.classList.remove("banner")
+            wrongEl.classList.add("hide")
+            }
+        }  
+
+    var answerWrong = function() {
+        if (wrongEl.className = "hide") {
+            wrongEl.classList.remove("hide")
+            wrongEl.classList.add("banner")
+            correctEl.classList.remove("banner")
+            correctEl.classList.add("hide")
+        }
+    }
 
     //check if answer is correct    
     var answerCheck = function(event) {
         var selectedanswer = event.target
             if (arrayShuffledQuestions[QuestionIndex].a === selectedanswer.innerText){
+                answerCorrect()
                 score = score + 10
             }
-              else {
+
+            else {
+                answerWrong()
               score = score - 5
+             
               //subrtract time
           };
 
@@ -119,41 +143,48 @@
                 }
         }
 
+        //Display total score screen at end of game
     var showScore = function () {
-        ontainerQuestionEl.classList.add("hide");
+        containerQuestionEl.classList.add("hide");
         containerEndEl.classList.remove("hide");
         containerEndEl.classList.add("show");
 
         var scoreDisplay = document.createElement("p");
         scoreDisplay.innerText = ("Your final score is " + score + "!");
         containerScoreEl.appendChild(scoreDisplay);
-        }
+        }       
 
-    var saveHighScore = function (event) {
-
-        event.preventDefault()
-
+    var createHighScore = function(event) { 
+        event.preventDefault() 
         var initials = document.querySelector("#initials").value;
-          if (!initials) {
-            alert("Enter your intials!");
-            return;
-            }
+        if (!initials) {
+          alert("Enter your intials!");
+          return;
+          }
 
-        formInitials.reset()
+      formInitials.reset()
 
-        var HighScore = [
-        {initials: initials,
-        score: score} ]
-            
-        HighScores.push[HighScore]
+      HighScores = [
+      {initials: initials,
+      score: score} ]
 
-        localStorage.setItem("HighScores", JSON.stringify(HighScores))
+      HighScores.push[HighScores]
+      console.log(HighScores)
 
-        displayHighScores()
-            
+      var highscoreEl = document.createElement("li")
+      highscoreEl.ClassName = "high-score";
+      highscoreEl.innerText = initials + " - " + score;
+      listHighScoreEl.appendChild(highscoreEl)
+
+      saveHighScore()
+      displayHighScores()
+
     }
 
-        var createHighScore
+    var saveHighScore = function () {
+        localStorage.setItem("HighScores", JSON.stringify(HighScores))
+            
+    }
 
     var loadHighScore = function () {
         var LoadedHighScores = localStorage.getItem("HighScores")
@@ -163,6 +194,10 @@
 
         LoadedHighScores = JSON.parse(LoadedHighScores);
         console.log(LoadedHighScores)
+
+
+        
+        LoadedHighScores.sort((a, b) => a - b)
 
         for (var i = 0; i < LoadedHighScores.length; i++) {
             var highscoreEl = document.createElement("li")
@@ -210,7 +245,7 @@
       //on start click, start game
       btnStartEl.addEventListener("click", startGame)
       //on submit button -- enter or click
-      formInitials.addEventListener("submit", saveHighScore)
+      formInitials.addEventListener("submit", createHighScore)
       //when view high-scores is clicked
       ViewHighScoreEl.addEventListener("click", displayHighScores)
       //Go back button

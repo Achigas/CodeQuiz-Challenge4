@@ -157,6 +157,19 @@
      text-align: left;
  }
 
+ .banner {
+     font-size: 20px;
+     text-align: center;
+     color: rgba(199, 187, 187, 0.8);
+     font-style: italic;
+     margin-top: 0;
+ }
+
+.banner h2 {
+    margin-top: 0;
+}
+     
+
  ul .score-list {
 
  }
