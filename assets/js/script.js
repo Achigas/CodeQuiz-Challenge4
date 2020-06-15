@@ -17,7 +17,7 @@
       var answerbuttonsEl = document.getElementById("answer-buttons")
       var timerEl = document.querySelector("#timer");
       var score = 0;
-      var timerEl = 0;
+      timerEl.innerText = 0;
 
       //High Score Array
       var HighScores = [];
@@ -62,7 +62,22 @@
         QuestionIndex = 0 
         score = 0
     }
-    
+
+    var setTime = function () {
+        timeleft = 5;
+
+       var timercheck = setInterval(function() {
+        timerEl.innerText = timeleft;
+        timeleft--
+       
+        if (timeleft < 0) {
+            showScore()
+            clearInterval(timercheck)
+        }
+
+    }, 1000)
+    }
+
     var startGame = function() {
         //add classes to show/hide start and quiz screen
         containerStartEl.classList.add('hide');
@@ -71,6 +86,7 @@
         containerQuestionEl.classList.add('show');
         //Shuffle the questions so they show in random order
         arrayShuffledQuestions = questions.sort(() => Math.random() - 0.5)
+        setTime()
         setQuestion()
       }
     
@@ -164,16 +180,15 @@
 
       formInitials.reset()
 
-      HighScores = [
+      var HighScore = [
       {initials: initials,
-      score: score} ]
+      score: score} ] 
 
-      HighScores.push[HighScores]
-      console.log(HighScores)
-
+      HighScores.push(HighScore)
+    
       var highscoreEl = document.createElement("li")
       highscoreEl.ClassName = "high-score";
-      highscoreEl.innerText = initials + " - " + score;
+      highscoreEl.innerHTML = initials + " - " + score;
       listHighScoreEl.appendChild(highscoreEl)
 
       saveHighScore()
@@ -196,13 +211,12 @@
         console.log(LoadedHighScores)
 
 
-        
-        LoadedHighScores.sort((a, b) => a - b)
-
         for (var i = 0; i < LoadedHighScores.length; i++) {
+            var loadedinitials = LoadedHighScores[i].initials;
+            var loadedscore = LoadedHighScores[i].score;
             var highscoreEl = document.createElement("li")
             highscoreEl.ClassName = "high-score";
-            highscoreEl.innerText = LoadedHighScores[i].initials + " - " + LoadedHighScores[i].score;
+            highscoreEl.innerText = loadedinitials + " - " + loadedscore;
             listHighScoreEl.appendChild(highscoreEl)
 
         HighScores.push(LoadedHighScores[i])
@@ -238,7 +252,9 @@
             listHighScoreEl.removeChild(listHighScoreEl.firstChild)
         }
 
-    }
+        localStorage.clear(HighScores);
+
+    } 
 
     loadHighScore()
         
