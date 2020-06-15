@@ -208,8 +208,6 @@
 
       formInitials.reset();
 
-      initials = initials.toUpperCase()
-
       var HighScore = {
       initials: initials,
       score: score

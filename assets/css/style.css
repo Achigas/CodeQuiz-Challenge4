@@ -18,6 +18,7 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
   
+  /* Header */
   header {
       display: flex;
       justify-content: space-between;
@@ -44,6 +45,7 @@
       padding-right: 20px;
   }
 
+  /*Main content */
 .container {
       padding: 20px;
       flex-direction: column;
@@ -90,7 +92,6 @@
     width: 35%;
     font-size: 2.2rem;
     border-radius: 5px;
-    text-transform: uppercase;
   }
 
   .end input:focus {
@@ -116,6 +117,7 @@
       text-align: left;
   }
 
+  /*Button Styling */
   .btn {
       background: var(--secondary);
       color: var(--white);
@@ -123,6 +125,7 @@
       border-radius: 10px;
       border: none;
       box-shadow: 0 3px grey;
+      margin-top: 10px;
   }
 
   .btn:hover {
@@ -157,8 +160,10 @@
  .answerbtn {
      width: 50%;
      text-align: left;
-     font-size: 20px;
+     font-size: 3.0vw;
  }
+
+ /* correct/wrong styling */
 
  .banner {
      font-size: 25px;
@@ -174,7 +179,8 @@
     text-align: center;
     padding-top: 5px;
 }
-     
+
+/* List for High Scores */
  
  ol {
     list-style-type: number;
@@ -186,7 +192,28 @@
 
 
 li {
-    font-size: 20px;
+    font-size: 4.0vw;
+}
 
+/* media query for smaller screens */
+
+@media screen and (max-width: 1024px) {
+
+    .btn {
+        width: 100%;
+        font-size: 3.0vw;
+    }
+
+    #question {
+        font-size: 4.5vw;
+    }
+
+    h1 {
+        font-size: 4.5vw;
+    }
+
+    p {
+        font-size: 3.0vw;
+    }
 
 }
