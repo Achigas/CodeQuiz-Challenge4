@@ -17,6 +17,8 @@
       var answerbuttonsEl = document.getElementById("answer-buttons")
       var timerEl = document.querySelector("#timer");
       var score = 0;
+      var timeleft;
+      var gameover
       timerEl.innerText = 0;
 
       //High Score Array
@@ -30,25 +32,29 @@
       
       // The array of questions for our quiz game.
       var questions = [
-        { q: 'Arrays0 in Javascript can be used to store __________.', 
+        { q: 'Arrays in Javascript can be used to store __________.', 
           a: '4. all of the above', 
           choices: [{choice: '1. numbers'}, {choice: '2. booleans'}, {choice: '3. strings'}, {choice: '4. all of the above'}]
         },
-        { q: 'Arrays8 in Javascript can be used to store __________.', 
-          a: '4. all of the above', 
-          choices: [{choice: '1. numbers'}, {choice: '2. booleans'}, {choice: '3. strings'}, {choice: '4. all of the above'}]
+        { q: 'Inside which HTML element do we put the javascript?', 
+          a: '3. <script>', 
+          choices: [{choice: '1. <h1>'}, {choice: '2. <js>'}, {choice: '3. <script>'}, {choice: '4. <head>'}]
         },
-        { q: 'Arrays3 in Javascript can be used to store __________.', 
-          a: '4. all of the above', 
-          choices: [{choice: '1. numbers'}, {choice: '2. booleans'}, {choice: '3. strings'}, {choice: '4. all of the above'}]
+        { q: 'In the code -- setinterval(time(),1000) -- what is time()?', 
+          a: '1. callback function', 
+          choices: [{choice: '1. callback function'}, {choice: '2. undefined'}, {choice: '3. variable'}, {choice: '4. all of the above'}]
         },
-        { q: 'Arrays1 in Javascript can be used to store __________.', 
-          a: '4. all of the above', 
-          choices: [{choice: '1. numbers'}, {choice: '2. booleans'}, {choice: '3. strings'}, {choice: '4. all of the above'}]
+        { q: 'What syntax would call a function?', 
+          a: '4. function()', 
+          choices: [{choice: '1. var function'}, {choice: '2. function'}, {choice: '3. call function'}, {choice: '4. function()'}]
         },
-        { q: 'Arrays2 in Javascript can be used to store __________.', 
-          a: '4. all of the above', 
-          choices: [{choice: '1. numbers'}, {choice: '2. booleans'}, {choice: '3. strings'}, {choice: '4. all of the above'}]
+        { q: 'When did javascript first appear?', 
+          a: '1. 1995', 
+          choices: [{choice: '1. 1995'}, {choice: '2. Roaring twenties'}, {choice: '3. 2005'}, {choice: '4. 2000'}]
+        },
+        { q: 'What does DOM stand for?', 
+          a: '2. Document Object Model', 
+          choices: [{choice: '1. Do Overnight Modules'}, {choice: '2. Document Object Model'}, {choice: '3. Divas Obviously Model'}, {choice: '4. Do Oo Mo'}]
         },
       ];
       
@@ -64,14 +70,19 @@
     }
 
     var setTime = function () {
-        timeleft = 5;
+        timeleft = 30;
 
-       var timercheck = setInterval(function() {
+    var timercheck = setInterval(function() {
         timerEl.innerText = timeleft;
         timeleft--
+
+        if (gameover) {
+            clearInterval(timercheck)
+        }
        
         if (timeleft < 0) {
             showScore()
+            timerEl.innerText = 0
             clearInterval(timercheck)
         }
 
@@ -139,14 +150,13 @@
         var selectedanswer = event.target
             if (arrayShuffledQuestions[QuestionIndex].a === selectedanswer.innerText){
                 answerCorrect()
-                score = score + 10
+                score = score + 5
             }
 
             else {
-                answerWrong()
-              score = score - 5
-             
-              //subrtract time
+              answerWrong()
+              score = score - 2;
+              timeleft = timeleft - 3;
           };
 
         //go to next question, check if there is more questions
@@ -155,7 +165,8 @@
                 setQuestion()
             }   
             else {
-               showScore()
+               gameover = "true";
+               showScore();
                 }
         }
 
