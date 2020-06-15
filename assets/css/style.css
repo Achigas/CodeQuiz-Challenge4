@@ -150,6 +150,7 @@
 
  .startend {
      width: 25%;
+     margin-top: 10px;
  }
 
  .answerbtn {
@@ -174,10 +175,17 @@
 }
      
  
- ul .score-list {
-
+ ol {
+    list-style-type: number;
  }
 
-.high-score {
+ li:nth-child(odd) {
+     background-color: rgba(228, 151, 164, 0.5);;
+ }
+
+
+li {
+    font-size: 20px;
+
 
 }

@@ -67,7 +67,17 @@
         containerScoreEl.removeChild(containerScoreEl.lastChild)
         QuestionIndex = 0 
         score = 0
+
+        if (correctEl.className = "show") {
+            correctEl.classList.remove("show");
+            correctEl.classList.add("hide")
+        }
+        if (wrongEl.className = "show") {
+            wrongEl.classList.remove("show");
+            wrongEl.classList.add("hide");
+        }
     }
+
 
     var setTime = function () {
         timeleft = 30;
@@ -252,6 +262,16 @@
         if (containerQuestionEl.className = "show") {
             containerQuestionEl.classList.remove("show")
             containerQuestionEl.classList.add("hide")
+            }
+
+        if (correctEl.className = "show") {
+            correctEl.classList.remove("show");
+            correctEl.classList.add("hide")
+        }
+        
+        if (wrongEl.className = "show") {
+            wrongEl.classList.remove("show");
+            wrongEl.classList.add("hide");
             }
         
     }

@@ -14,10 +14,10 @@ JavaScript Code Quiz
 A JavaScript Quiz with multiple choice questions, a timer, and high scores!
 
 ## Website
-[URL](URL)
+[JavaScript Quiz Game](https://achigas.github.io/CodeQuiz-Challenge4/)
 
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
+![Question Screenshot](./assets/images/QuizGame.png)
 
 ## Code 
 * HTML
